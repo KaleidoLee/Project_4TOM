@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public float runSpeed;
     public float jumpSpeed;
 
+    private int move02;
+
     private Rigidbody2D rb;
     private BoxCollider2D myFeet;
     private bool isGround;
@@ -41,7 +43,16 @@ public class PlayerController : MonoBehaviour
     void Run()
     {
         float move01 = Input.GetAxis("Horizontal");
-        Vector2 playerVel = new Vector2(move01 * runSpeed, rb.velocity.y);
+        if ((!Input.GetKey(KeyCode.A) & !Input.GetKey(KeyCode.D) ||
+            (Input.GetKey(KeyCode.A) & Input.GetKey(KeyCode.D))))
+            move02 = 0;
+        else if (Input.GetKey(KeyCode.A))
+            move02 = -1;
+        else if (Input.GetKey(KeyCode.D))
+            move02 = 1;
+        else
+            move02 = 0;
+        Vector2 playerVel = new Vector2(move02 * runSpeed, rb.velocity.y);
         rb.velocity = playerVel;
         bool PlayerRunSpeed = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
         anim.SetBool("Run", PlayerRunSpeed);
