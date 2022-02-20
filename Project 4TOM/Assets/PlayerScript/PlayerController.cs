@@ -15,12 +15,19 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
 
+    // parameters for bomb mechanics
+    public bool isBombOnPlayer;
+    public bool bombCanPass;
+    public float bombPassCooldownTimer;
+    public float bombTimerCooldown;
+    public GameObject bombImage;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         myFeet = GetComponent<BoxCollider2D>();
+        bombImage.SetActive(false);
     }
 
     // Update is called once per frame
@@ -31,6 +38,7 @@ public class PlayerController : MonoBehaviour
         Jump();
         CheckGround();
         SwitchAnimation();
+        BombChecker();
     }
 
     void CheckGround()
@@ -106,6 +114,46 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("Fall", false);
             anim.SetBool("Idle", true);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // testing obtaining the bomb
+        if (collision.gameObject.CompareTag("Bomb"))
+        {
+            isBombOnPlayer = true;
+        }
+
+        if (collision.gameObject.CompareTag("Player") && bombCanPass == true) // check if player can pass the bomb to others
+        {
+            PlayerController collidedPlayer = collision.gameObject.GetComponent<PlayerController>();
+            if (collidedPlayer != null && collidedPlayer.isBombOnPlayer == false)
+            {
+                collidedPlayer.isBombOnPlayer = true;
+                isBombOnPlayer = false;
+            }
+        }
+    }
+
+    void BombChecker() // check to see if the bomb is on the player
+    {
+        if (isBombOnPlayer == true) // if the bomb is on the player
+        {
+            bombImage.SetActive(true);
+            // runSpeed = // set run speed after obtaining bomb 
+            bombTimerCooldown = bombTimerCooldown - Time.deltaTime;
+            if (bombTimerCooldown <= 0.0f)
+            {
+                bombCanPass = true;
+            }
+        }
+        else // if the bomb is not on the player
+        {
+            bombTimerCooldown = 1.0f;
+            bombImage.SetActive(false);
+            isBombOnPlayer = false;
+            bombCanPass = false;
         }
     }
 }
