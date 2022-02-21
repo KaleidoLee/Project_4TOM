@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public float runSpeed;
     public float jumpSpeed;
+    public float baseRunSpeed;
+    public float runSpeedMultiplierInPercent;
 
     private int move02;
 
@@ -60,6 +62,15 @@ public class PlayerController : MonoBehaviour
             move02 = 1;
         else
             move02 = 0;
+
+        if(isBombOnPlayer == true) // change speed when player has or does not have bomb
+        {
+            runSpeed = baseRunSpeed * (100 + runSpeedMultiplierInPercent) / 100; // increased run speed by how many % when player has bomb
+        }
+        else
+        {
+            runSpeed = baseRunSpeed; // return to base run speed when player does not have bomb
+        }
         Vector2 playerVel = new Vector2(move02 * runSpeed, rb.velocity.y);
         rb.velocity = playerVel;
         bool PlayerRunSpeed = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
@@ -125,10 +136,10 @@ public class PlayerController : MonoBehaviour
             isBombOnPlayer = true;
         }
 
-        if (collision.gameObject.CompareTag("Player") && bombCanPass == true) // check if player can pass the bomb to others
+        if (collision.gameObject.CompareTag("Player") && bombCanPass == true) // check if player collided with another player and if player can pass the bomb to others
         {
-            PlayerController collidedPlayer = collision.gameObject.GetComponent<PlayerController>();
-            if (collidedPlayer != null && collidedPlayer.isBombOnPlayer == false)
+            PlayerController collidedPlayer = collision.gameObject.GetComponent<PlayerController>(); // obtaining details of collided player
+            if (collidedPlayer != null && collidedPlayer.isBombOnPlayer == false) // if collided player does not have bomb
             {
                 collidedPlayer.isBombOnPlayer = true;
                 isBombOnPlayer = false;
