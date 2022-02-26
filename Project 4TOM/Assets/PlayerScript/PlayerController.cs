@@ -8,6 +8,11 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed;
     public float baseRunSpeed;
     public float runSpeedMultiplierInPercent;
+    public float baseHealthPoints; // Initial health points
+    public float currentHealthPoints;
+    public int baseLives;
+    public int currentLives;
+    public float healthPointsDecayPerSecond;
 
     private int move02;
 
@@ -20,8 +25,8 @@ public class PlayerController : MonoBehaviour
     // parameters for bomb mechanics
     public bool isBombOnPlayer;
     public bool bombCanPass;
+    public float bombPassCooldownTimeInSeconds;
     public float bombPassCooldownTimer;
-    public float bombTimerCooldown;
     public GameObject bombImage;
     // Start is called before the first frame update
     void Start()
@@ -30,6 +35,8 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         myFeet = GetComponent<BoxCollider2D>();
         bombImage.SetActive(false);
+        currentHealthPoints = baseHealthPoints;
+        currentLives = baseLives;
     }
 
     // Update is called once per frame
@@ -153,15 +160,34 @@ public class PlayerController : MonoBehaviour
         {
             bombImage.SetActive(true);
             // runSpeed = // set run speed after obtaining bomb 
-            bombTimerCooldown = bombTimerCooldown - Time.deltaTime;
-            if (bombTimerCooldown <= 0.0f)
+            bombPassCooldownTimer = bombPassCooldownTimer - Time.deltaTime;
+            if (bombPassCooldownTimer <= 0.0f)
             {
                 bombCanPass = true;
+                bombPassCooldownTimer = 0;
+            }
+
+            currentHealthPoints = currentHealthPoints - (healthPointsDecayPerSecond * Time.deltaTime);// reduce health points when player has bomb
+            if (currentHealthPoints <= 0.0f)
+            {
+                currentLives--; // reduce 1 life
+
+                if (currentLives <= 0)
+                {
+                    // lose game
+                }
+                else
+                {
+                    currentHealthPoints = baseHealthPoints; // respawn with health again 
+                }
+
+                // randomise/transfer bomb to other player
+                isBombOnPlayer = false; // bomb no longer on player since it exploded and transferred to other player
             }
         }
         else // if the bomb is not on the player
         {
-            bombTimerCooldown = 1.0f;
+            bombPassCooldownTimer = bombPassCooldownTimeInSeconds;
             bombImage.SetActive(false);
             isBombOnPlayer = false;
             bombCanPass = false;

@@ -14440,6 +14440,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2908261556997803698, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
+      propertyPath: lives
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908261556997803698, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
+      propertyPath: baseLives
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908261556997803698, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
       propertyPath: bombImage
       value: 
       objectReference: {fileID: 1466908498}
@@ -14448,12 +14456,36 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2908261556997803698, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
+      propertyPath: healthPoints
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908261556997803698, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
+      propertyPath: baseHealthPoints
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908261556997803698, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
+      propertyPath: healthPointsDecay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908261556997803698, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
       propertyPath: runSpeedMultiplier
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2908261556997803698, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
+      propertyPath: bombPassCooldownTimer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908261556997803698, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
+      propertyPath: healthPointsDecayPerSecond
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908261556997803698, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
       propertyPath: runSpeedMultiplierInPercent
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908261556997803698, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
+      propertyPath: bombPassCooldownTimeInSeconds
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2908261556997803700, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
       propertyPath: m_Name
