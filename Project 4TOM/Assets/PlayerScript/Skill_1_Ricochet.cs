@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using Photon.Pun;
 
 public class Skill_1_Ricochet : MonoBehaviour
 {
@@ -13,35 +15,47 @@ public class Skill_1_Ricochet : MonoBehaviour
 
     LineRenderer lr;
 
+    //multiplayer parameters
+    PhotonView view;
+
     private void Start()
     {
+        view = GetComponent<PhotonView>();
+
+        firePoint = this.gameObject.transform.GetChild(0).gameObject;
+
         lr = firePoint.GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        lookDirection = cam.ScreenToWorldPoint(Input.mousePosition); //get Vector2 component of mouse position on screen
-        lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg + 180f; //calculate angle between firepoint and mouse position
-        firePoint.transform.rotation = Quaternion.Euler(0, 0, lookAngle); //firepoint rotates towards mouse position
-
-        //create a line of trajectory 
-        Vector2[] trajectory = Plot(bulletPrefab.GetComponent<Rigidbody2D>(), firePoint.transform.position, lookDirection, 500);
-
-        //create a new point in the line renderer for each element in the list
-        lr.positionCount = trajectory.Length;
-
-        Vector3[] positions = new Vector3[trajectory.Length];
-        for (int i = 0; i < trajectory.Length; i++)
+        //if the player is me
+        if (view.IsMine)
         {
-            positions[i] = trajectory[i];
-        }
-        lr.SetPositions(positions); //set position of points for each element in Vector3[] positions
+            lookDirection = cam.ScreenToWorldPoint(Input.mousePosition); //get Vector2 component of mouse position on screen
+            lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg + 180f; //calculate angle between firepoint and mouse position
+            firePoint.transform.rotation = Quaternion.Euler(0, 0, lookAngle); //firepoint rotates towards mouse position
 
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Shoot();
+            //create a line of trajectory 
+            Vector2[] trajectory = Plot(bulletPrefab.GetComponent<Rigidbody2D>(), firePoint.transform.position, lookDirection, 500);
+
+            //create a new point in the line renderer for each element in the list
+            lr.positionCount = trajectory.Length;
+
+            Vector3[] positions = new Vector3[trajectory.Length];
+            for (int i = 0; i < trajectory.Length; i++)
+            {
+                positions[i] = trajectory[i];
+            }
+            lr.SetPositions(positions); //set position of points for each element in Vector3[] positions
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Shoot();
+            }
         }
+        
     }
 
     void Shoot()

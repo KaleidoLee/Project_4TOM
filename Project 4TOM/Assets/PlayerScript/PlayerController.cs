@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
 
+    //parameters for multiplayer
+    PhotonView view;
+
+
     // parameters for bomb mechanics
     public bool isBombOnPlayer;
     public bool bombCanPass;
@@ -31,23 +36,39 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //multiplayer stuff (to get the view point form each player)
+        view = GetComponent<PhotonView>();
+
+
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         myFeet = GetComponent<BoxCollider2D>();
         bombImage.SetActive(false);
         currentHealthPoints = baseHealthPoints;
         currentLives = baseLives;
-    }
+    } 
 
     // Update is called once per frame
     void Update()
     {
-        Run();
-        Facedirection();
-        Jump();
-        CheckGround();
-        SwitchAnimation();
-        BombChecker();
+        //multiplayer stuff (if the player is mine)
+        if (view.IsMine)
+        {
+            Run();
+            Facedirection();
+            Jump();
+            CheckGround();
+            SwitchAnimation();
+            BombChecker();
+        }
+
+
+        //Run();
+        //Facedirection();
+        //Jump();
+        //CheckGround();
+        //SwitchAnimation();
+        //BombChecker();
     }
 
     void CheckGround()
