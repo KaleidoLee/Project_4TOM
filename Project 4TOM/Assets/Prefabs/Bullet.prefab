@@ -139,5 +139,5 @@ MonoBehaviour:
     m_Bits: 64
   speed: 15
   rb: {fileID: 4271995414812258795}
-  maxBounceNum: 5
   playerChar: {fileID: 2908261556997803700, guid: 811669c2b79329e4caf324d7a28f6c68, type: 3}
+  bulletLifetimeLimit: 3

@@ -186,10 +186,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runSpeed: 4
   jumpSpeed: 12
+  baseRunSpeed: 0
+  runSpeedMultiplierInPercent: 0
+  baseHealthPoints: 0
+  currentHealthPoints: 0
+  baseLives: 0
+  currentLives: 0
+  healthPointsDecayPerSecond: 0
   isBombOnPlayer: 0
   bombCanPass: 0
+  bombPassCooldownTimeInSeconds: 0
   bombPassCooldownTimer: 0
-  bombTimerCooldown: 0
   bombImage: {fileID: 0}
 --- !u!50 &2908261556997803699
 Rigidbody2D:
