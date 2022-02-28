@@ -200,7 +200,7 @@ MonoBehaviour:
   bombCanPass: 0
   bombPassCooldownTimeInSeconds: 1
   bombPassCooldownTimer: 0
-  bombImage: {fileID: 0}
+  bombImage: {fileID: 389312424952292037}
 --- !u!50 &2908261556997803699
 Rigidbody2D:
   serializedVersion: 4
