@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerDetectorAndBombTransferScript : MonoBehaviour
 {
     public bool GameIsStarted = false;
-    public int CurrentNumberOfPlayers;
     public int MaxNumberOfPlayers = 4;
     public int NumberOfActivePlayers; // how many players are left in the game
     public int PlayerCheckLoop1 = 0; // first checking to determine how many players start the game
@@ -24,7 +23,6 @@ public class PlayerDetectorAndBombTransferScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CurrentNumberOfPlayers = 0;
         // if enough players, start game
         while (PlayerCheckLoop1 < 1) // because it manually turns off first by the game manager, it already started and detected that there is no players, so must also check whether game started or not.
         {
@@ -34,15 +32,18 @@ public class PlayerDetectorAndBombTransferScript : MonoBehaviour
                 foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) // using lists
                 {
                     ListOfPlayers.Add(player); // add a player to the list of players
-                    CurrentNumberOfPlayers = ListOfPlayers.Count;
                 }
             }
-            NumberOfActivePlayers = CurrentNumberOfPlayers; // only check number of active players once, then manually reduce it when a player loses
+            NumberOfActivePlayers = ListOfPlayers.Count; // only check number of active players once, then manually reduce it when a player loses
             PlayerCheckLoop1++; // PlayerCheckLoop is to ensure the check is only done once after the game starts, or it will keep adding players for list.
 
         }
-        UpdateList();
-        RandomiseBombToPlayerList();
+        if (GameIsStarted == true)
+        {
+            UpdateList();
+            RandomiseBombToPlayerList();
+        }
+
     }
 
     private void UpdateList()
@@ -52,16 +53,22 @@ public class PlayerDetectorAndBombTransferScript : MonoBehaviour
         {
             foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) // checking for each player in the list of players
             {
-                //while(PlayerCheckLoop2 < 1)
                 {
                     //NumberOfActivePlayers = 0; // reset to count number of active players
                     if (player.GetComponent<PlayerController>().currentLives <= 0) // if current player loses 
                     {
-                        player.GetComponent<PlayerController>().GamePosition = CurrentNumberOfPlayers; // set which place the player got in the game
+                        player.GetComponent<PlayerController>().GamePosition = NumberOfActivePlayers; // set which place the player got in the game
+                        player.GetComponent<PlayerController>().isBombOnPlayer = false;
                         player.GetComponent<PlayerController>().gameObject.SetActive(false); // disable player
                         NumberOfActivePlayers--;
                         PlayersWithBomb = 0; // After player dies, no player has bomb anymore, so need to set
                         
+                    }
+
+                    if (player.GetComponent<PlayerController>().currentHealthPoints <= 0)
+                    {
+                        player.GetComponent<PlayerController>().isBombOnPlayer = false;
+                        PlayersWithBomb = 0;
                     }
 
                 }
