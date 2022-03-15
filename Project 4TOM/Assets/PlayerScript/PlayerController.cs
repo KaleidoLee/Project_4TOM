@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
 
     //parameters for multiplayer
     PhotonView view;
-
+    public int GamePosition = 0;
+    public int PlayerNumber; // for detection and bomb transfer
 
     // parameters for bomb mechanics
     public bool isBombOnPlayer;
@@ -180,7 +181,6 @@ public class PlayerController : MonoBehaviour
         if (isBombOnPlayer == true) // if the bomb is on the player
         {
             bombImage.SetActive(true);
-            // runSpeed = // set run speed after obtaining bomb 
             bombPassCooldownTimer = bombPassCooldownTimer - Time.deltaTime;
             if (bombPassCooldownTimer <= 0.0f)
             {
@@ -191,6 +191,7 @@ public class PlayerController : MonoBehaviour
             currentHealthPoints = currentHealthPoints - (healthPointsDecayPerSecond * Time.deltaTime);// reduce health points when player has bomb
             if (currentHealthPoints <= 0.0f)
             {
+                isBombOnPlayer = false; // bomb no longer on player since it exploded and transferred to other player
                 currentLives--; // reduce 1 life
 
                 if (currentLives <= 0)
@@ -200,10 +201,11 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     currentHealthPoints = baseHealthPoints; // respawn with health again 
+                    // set respawn location (don't use instantiate cause we need to save the player lives)
                 }
 
-                // randomise/transfer bomb to other player
-                isBombOnPlayer = false; // bomb no longer on player since it exploded and transferred to other player
+                // randomise/transfer bomb to other player (done with another script)
+                
             }
         }
         else // if the bomb is not on the player

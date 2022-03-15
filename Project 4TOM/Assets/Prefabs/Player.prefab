@@ -193,6 +193,8 @@ MonoBehaviour:
   baseLives: 0
   currentLives: 0
   healthPointsDecayPerSecond: 0
+  GamePosition: 0
+  PlayerNumber: 0
   isBombOnPlayer: 0
   bombCanPass: 0
   bombPassCooldownTimeInSeconds: 0

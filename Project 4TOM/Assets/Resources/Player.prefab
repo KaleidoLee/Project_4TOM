@@ -107,7 +107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2908261556997803711
 Transform:
   m_ObjectHideFlags: 0
@@ -192,10 +192,12 @@ MonoBehaviour:
   baseRunSpeed: 4
   runSpeedMultiplierInPercent: 5
   baseHealthPoints: 20
-  currentHealthPoints: 0
+  currentHealthPoints: 20
   baseLives: 3
-  currentLives: 0
+  currentLives: 3
   healthPointsDecayPerSecond: 1
+  GamePosition: 0
+  PlayerNumber: 0
   isBombOnPlayer: 0
   bombCanPass: 0
   bombPassCooldownTimeInSeconds: 1
