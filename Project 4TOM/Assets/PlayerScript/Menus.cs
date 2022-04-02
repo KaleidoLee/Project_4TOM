@@ -18,7 +18,7 @@ public class Menus : MonoBehaviour
     //}
     public void PlayButton() //Load lobby scene
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("LoadingScreen");
     }
 
     public void QuitButton() //Quit the game

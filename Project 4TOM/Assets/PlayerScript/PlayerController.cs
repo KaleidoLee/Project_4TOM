@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPunObservable
 {
     public float runSpeed;
     public float jumpSpeed;
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     PhotonView view;
     public int GamePosition = 0;
     public int PlayerNumber; // for detection and bomb transfer
+    private Vector3 smoothMove;
 
     // parameters for bomb mechanics
     public bool isBombOnPlayer;
@@ -62,14 +63,10 @@ public class PlayerController : MonoBehaviour
             SwitchAnimation();
             BombChecker();
         }
-
-
-        //Run();
-        //Facedirection();
-        //Jump();
-        //CheckGround();
-        //SwitchAnimation();
-        //BombChecker();
+        else
+        {
+            smoothMovement();
+        }
     }
 
     void CheckGround()
@@ -214,6 +211,26 @@ public class PlayerController : MonoBehaviour
             bombImage.SetActive(false);
             isBombOnPlayer = false;
             bombCanPass = false;
+        }
+    }
+
+    //this is for photon stuff
+    void smoothMovement()
+    {
+        transform.position = Vector3.Lerp(transform.position, smoothMove, Time.fixedDeltaTime * 20);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+
+        }
+        else if (stream.IsReading)
+        {
+            smoothMove = (Vector3)stream.ReceiveNext();
+
         }
     }
 }
