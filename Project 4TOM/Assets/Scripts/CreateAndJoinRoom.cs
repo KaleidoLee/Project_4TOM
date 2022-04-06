@@ -9,22 +9,34 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
 {
     //public InputField CreateInput;
     //public InputField JoinInput;
-    public TMP_InputField CreateInput;
-    public TMP_InputField JoinInput;
-
+    public TMP_InputField Input;
+    string roomname;
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(CreateInput.text);
+        if (string.IsNullOrEmpty(Input.text))
+        {
+            return;
+        }
+        PhotonNetwork.CreateRoom(Input.text);
     }
 
     public void JoinRoom()
     {
-        PhotonNetwork.JoinRoom(JoinInput.text);
+        if (string.IsNullOrEmpty(Input.text))
+        {
+            return;
+        }
+        PhotonNetwork.JoinRoom(Input.text);
     }
 
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel("SampleScene");
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        base.OnCreateRoomFailed(returnCode, message);
     }
 }
