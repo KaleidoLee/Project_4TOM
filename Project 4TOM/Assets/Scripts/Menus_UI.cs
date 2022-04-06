@@ -72,7 +72,7 @@ public class Menus_UI : MonoBehaviour
     //Menus
     public void PlayButton() //Load lobby scene
     {
-        SceneManager.LoadScene("LoadingScreen");
+        SceneManager.LoadScene("LobbySceneNew");
     }
 
     public void QuitButton() //Quit the game

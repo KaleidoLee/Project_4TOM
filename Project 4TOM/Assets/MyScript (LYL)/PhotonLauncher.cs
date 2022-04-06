@@ -16,6 +16,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject RoomButtonPrefabs;
     [SerializeField] Transform PlayerListContainer;
     [SerializeField] GameObject PlayerNamePrefabs;
+    [SerializeField] GameObject startGameButton;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     {
         Debug.Log("connected to master");
         PhotonNetwork.JoinLobby();
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public override void OnJoinedLobby()
@@ -76,6 +78,13 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         {
             Instantiate(PlayerNamePrefabs, PlayerListContainer).GetComponent<playerListItem>().setUp(players[i]);
         }
+
+        startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        startGameButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -120,4 +129,10 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     {
         Instantiate(PlayerNamePrefabs, PlayerListContainer).GetComponent<playerListItem>().setUp(newPlayer);
     }
+
+    public void startGame()
+    {
+        PhotonNetwork.LoadLevel(4);
+    }
+
 }
