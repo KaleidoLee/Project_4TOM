@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Platform
   - Bomb
+  - BGM
   layers:
   - Default
   - TransparentFX
