@@ -39,7 +39,7 @@ public class Menus_UI : MonoBehaviour
     //In-Game UIs
     void HPBarFiller()
     {
-        RingHPBar.fillAmount = Mathf.Lerp(RingHPBar.fillAmount, (currentHP / maxHP), LerpSpeed); //Changing the value of fill amount with HP
+        RingHPBar.fillAmount = Mathf.Lerp(RingHPBar.fillAmount, (currentHP / maxHP), LerpSpeed); //Changing the value of fill amount with HPoi
 
         for (int i = 0; i < HealthPoints.Length; i++)
         {
