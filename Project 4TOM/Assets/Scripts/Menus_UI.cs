@@ -8,24 +8,26 @@ public class Menus_UI : MonoBehaviour
 {
     //In-Game UIs
     public Image RingHPBar;
-    public Image LivesUI;
-    public Image[] HealthPoints; //Different portions of HP in the UI
+    public Image[] Lives;
+    //public Image[] HealthPoints; //Different portions of HP in the UI
 
-    float currentHP, maxHP = 100;
+    public float CurrentHP, MaxHP = 100;
+    public int CurrentLives, MaxLives = 3;
     float LerpSpeed; //Speed of changing the value of fill amount
 
     //Start is called before the first frame update
     void Start()
     {
-        currentHP = maxHP;
+        CurrentHP = MaxHP;
+        CurrentLives = MaxLives;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentHP > maxHP)
+        if (CurrentHP > MaxHP)
         { 
-            currentHP = maxHP; 
+            CurrentHP = MaxHP; 
         }
 
         LerpSpeed = 3f * Time.deltaTime;
@@ -39,34 +41,39 @@ public class Menus_UI : MonoBehaviour
     //In-Game UIs
     void HPBarFiller()
     {
-        RingHPBar.fillAmount = Mathf.Lerp(RingHPBar.fillAmount, (currentHP / maxHP), LerpSpeed); //Changing the value of fill amount with HPoi
+        RingHPBar.fillAmount = Mathf.Lerp(RingHPBar.fillAmount, (CurrentHP / MaxHP), LerpSpeed); //Changing the value of fill amount with HP
 
-        for (int i = 0; i < HealthPoints.Length; i++)
+        for (int i = 0; i < Lives.Length; i++)
         {
-            HealthPoints[i].enabled = !DisplayHealthPoint(currentHP, i);
+            Lives[i].enabled = !DisplayHealthPoint(CurrentLives, i);
         }
     }
 
     void ColorChanger()
     {
-        Color HPColour = Color.Lerp(Color.red, Color.green, (currentHP / maxHP));
+        Color HPColour = Color.Lerp(Color.red, Color.green, (CurrentHP / MaxHP));
         RingHPBar.color = HPColour;
     }
 
-    bool DisplayHealthPoint(float _health, int pointNumber)
+    bool DisplayHealthPoint(float CurrentLives, int DisplayedLives)
     {
-        return ((pointNumber * 10) >= _health);
+        return ((DisplayedLives) >= CurrentLives);
     }
 
     public void Damage(float damagePoints)
     {
-        if (currentHP > 0)
-            currentHP -= damagePoints;
+        if (CurrentHP > 0)
+            CurrentHP -= damagePoints;
+
+        //else if (CurrentHP <= 0)
+        //{
+        //    CurrentLives -= 1;
+        //}
     }
     public void Heal(float healingPoints)
     {
-        if (currentHP < maxHP)
-            currentHP += healingPoints;
+        if (CurrentHP < MaxHP)
+            CurrentHP += healingPoints;
     }
 
     //Menus
