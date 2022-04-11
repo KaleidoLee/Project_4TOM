@@ -8,52 +8,83 @@ public class Menus_UI : MonoBehaviour
 {
     //HUD
     public Image RingHPBar;
+    public Image P2_RingHPBar;
+    public Image P3_RingHPBar;
+    public Image P4_RingHPBar;
+
     public Image[] Lives;
+    public Image[] P2_Lives;
+    public Image[] P3_Lives;
+    public Image[] P4_Lives;
+
+    public Image Alive_VFX;
+    public Image P2_Alive_VFX;
+    public Image P3_Alive_VFX;
+    public Image P4_Alive_VFX;
     //public Image[] HealthPoints; //Different portions of HP in the UI
 
+    public float Player1;
+    public float Player2;
+    public float Player3;
+    public float Player4;
+
     public float CurrentHP, MaxHP = 100;
+    public float P2_CurrentHP, P2_MaxHP = 100;
+    public float P3_CurrentHP, P3_MaxHP = 100;
+    public float P4_CurrentHP, P4_MaxHP = 100;
+
     public int CurrentLives, MaxLives = 3;
+    public int P2_CurrentLives, P2_MaxLives = 3;
+    public int P3_CurrentLives, P3_MaxLives = 3;
+    public int P4_CurrentLives, P4_MaxLives = 3;
+
     float LerpSpeed; //Speed of changing the value of fill amount
 
     //Menus
     public GameObject GameOverMenu;
     public GameObject PauseMenu;
     public static bool GameIsPaused;
+    public static bool GameIsOver;
 
     //Start is called before the first frame update
     void Start()
     {
-        //    CurrentHP = MaxHP;
-        //CurrentLives = MaxLives;
+        CurrentHP = MaxHP;
+        CurrentLives = MaxLives;
     }
 
     // Update is called once per frame
     void Update()
     {
        //HUD
-        CurrentHP = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().currentHealthPoints;
-        CurrentLives = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().currentLives;
-        
-        //if (CurrentHP > MaxHP)
-        //{ 
-        //    CurrentHP = MaxHP; 
-        //}
+        //CurrentHP = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().currentHealthPoints;
+        //CurrentLives = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().currentLives;
+
+        if (CurrentHP > MaxHP)
+        {
+            CurrentHP = MaxHP;
+        }
 
         LerpSpeed = 3f * Time.deltaTime;
 
         //Menus
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (GameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    if (GameIsPaused)
+        //    {
+        //        Resume();
+        //    }
+        //    else
+        //    {
+        //        Pause();
+        //    }
 
-        }
+        //}
+
+        //if(PlayerIsAlive = false)
+        //{
+        //    Alive_VFX.enabled;
+        //}
 
         //Function Call
         HPBarFiller();
