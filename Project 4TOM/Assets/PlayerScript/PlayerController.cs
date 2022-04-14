@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         {
             smoothMovement();
         }
+        BombChecker();
     }
 
     void CheckGround()
@@ -162,13 +163,27 @@ public class PlayerController : MonoBehaviour, IPunObservable
             isBombOnPlayer = true;
         }
 
+        PlayerController collidedPlayer = collision.gameObject.GetComponent<PlayerController>(); // obtaining details of collided player
         if (collision.gameObject.CompareTag("Player") && bombCanPass == true) // check if player collided with another player and if player can pass the bomb to others
         {
-            PlayerController collidedPlayer = collision.gameObject.GetComponent<PlayerController>(); // obtaining details of collided player
+            
             if (collidedPlayer != null && collidedPlayer.isBombOnPlayer == false) // if collided player does not have bomb
             {
                 collidedPlayer.isBombOnPlayer = true;
+                collidedPlayer.bombImage.SetActive(true);
                 isBombOnPlayer = false;
+                bombImage.SetActive(false);
+
+            }
+        }
+        else if (collision.gameObject.CompareTag("Player") && bombCanPass == false)
+        {
+            if (collidedPlayer != null && collidedPlayer.isBombOnPlayer == true)
+            {
+                collidedPlayer.isBombOnPlayer = false;
+                collidedPlayer.bombImage.SetActive(false);
+                isBombOnPlayer = true;
+                bombImage.SetActive(true);
             }
         }
     }
@@ -194,6 +209,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 if (currentLives <= 0)
                 {
                     // lose game
+                    //Destroy(gameObject); // this has to be set outside of view.ismine (how?)
                 }
                 else
                 {

@@ -1,27 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using Photon.Pun;
 
 public class GameManagerScript : MonoBehaviour
 {
     public int NumberOfPlayers;
     public GameObject BombTransferScriptObject;
+
+    //PhotonView view;
     //public GameObject PlayerDetectorObject;
     // Start is called before the first frame update
     void Start()
     {
+        //view = GetComponent<PhotonView>();
         BombTransferScriptObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Use this script to call UI Menus such as Pause Menu and Win Screen
-        DetermineNumberOfPlayers();
-        if (NumberOfPlayers == 4)
+        //if (view.IsMine)
         {
-            StartGame();
+            // Use this script to call UI Menus such as Pause Menu and Win Screen
+            DetermineNumberOfPlayers();
+            if (NumberOfPlayers == 4)
+            {
+                StartGame();
+            }
         }
+
     }
 
     private void DetermineNumberOfPlayers()
