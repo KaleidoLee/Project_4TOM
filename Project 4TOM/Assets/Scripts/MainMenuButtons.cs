@@ -1,20 +1,50 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuButtons : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private TextMeshProUGUI gameTitle;
+    private static Material m_TextBaseMaterial;
+    private static Material m_TextHighlightMaterial;
+    
+    private float glowIntensity = 0.3f;
+    [SerializeField] private float glowRate;
+    private bool glowDown = true;
+
+    private void Start()
     {
+        //Get a reference to the default base material
+        m_TextBaseMaterial = gameTitle.fontSharedMaterial;
         
+        //Create new instance of the material assigned to the text object
+        //Assumes all text objects will use the same highlight
+        m_TextHighlightMaterial = new Material(m_TextBaseMaterial);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        if (glowDown == true)
+        {
+            glowIntensity -= glowRate * Time.deltaTime;
+        }
+        else
+        {
+            glowIntensity += glowRate * Time.deltaTime;
+        }
+
+        if (glowIntensity >= 0.3)
+            glowDown = true;
+        else if (glowIntensity <= 0)
+            glowDown = false;
         
+        m_TextHighlightMaterial.SetFloat(ShaderUtilities.ID_GlowPower, glowIntensity);
+        gameTitle.fontSharedMaterial = m_TextHighlightMaterial;
+        gameTitle.UpdateMeshPadding();
+        Debug.Log(glowIntensity);
     }
 
     //Menus

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 6c0e3b51c30daba4894e14917322d159
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Ethnocentric
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a85e49da128c41248bb419031e878673, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
