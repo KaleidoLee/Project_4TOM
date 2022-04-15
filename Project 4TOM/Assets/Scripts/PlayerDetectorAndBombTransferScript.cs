@@ -9,10 +9,11 @@ public class PlayerDetectorAndBombTransferScript : MonoBehaviour
     public int MaxNumberOfPlayers = 4;
     public int NumberOfActivePlayers; // how many players are left in the game
     public int PlayerCheckLoop1 = 0; // first checking to determine how many players start the game
-    public int PlayerCheckLoop2 = 0; // second checking to determine how many players are left
     public int PlayersWithBomb;
+    public int RandomPlayer;
 
     public List<GameObject> ListOfPlayers = new List<GameObject>();
+    //public GameObject WinScreen;
 
     //PhotonView view;
     // Start is called before the first frame update
@@ -20,6 +21,7 @@ public class PlayerDetectorAndBombTransferScript : MonoBehaviour
     {
         MaxNumberOfPlayers = 4;
         //view = GetComponent<PhotonView>();
+        //WinScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -70,11 +72,11 @@ public class PlayerDetectorAndBombTransferScript : MonoBehaviour
                     //NumberOfActivePlayers = 0; // reset to count number of active players
                     if (player.GetComponent<PlayerController>().currentLives <= 0) // if current player loses 
                     {
-                        player.GetComponent<PlayerController>().GamePosition = NumberOfActivePlayers; // set which place the player got in the game
+                        player.GetComponent<PlayerController>().GamePosition = ListOfPlayers.Count; // set which place the player got in the game
                         player.GetComponent<PlayerController>().isBombOnPlayer = false;
-                        //player.GetComponent<PlayerController>().gameObject.SetActive(false); // disable player
-                        //player.SetActive(false); // this is not working
+                        ListOfPlayers.Remove(player);
                         Destroy(player); // will this work?
+                        
                         NumberOfActivePlayers--;
                         PlayersWithBomb = 0; // After player dies, no player has bomb anymore, so need to set
                         
@@ -95,6 +97,8 @@ public class PlayerDetectorAndBombTransferScript : MonoBehaviour
             // win game, show win screen
             //player.GetComponent<PlayerController>().GamePosition = ListOfPlayers.Count; // set 1st place for winning player
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GamePosition = ListOfPlayers.Count; // find the winner
+            Debug.Log("Winner");
+            //ShowWinScreen(); // remember to set this for end game screen
 
 
         }
@@ -111,12 +115,14 @@ public class PlayerDetectorAndBombTransferScript : MonoBehaviour
             }
             else
             {
-                PlayersWithBomb = 1;
+                PlayersWithBomb++;
             }
 
             if (PlayersWithBomb == 0 && GameIsStarted == true) // it straight away checks
             {
                 // randomise bomb
+                RandomPlayer = Random.Range(0, ListOfPlayers.Count);
+                //ListOfPlayers[RandomPlayer].GetComponent<PlayerController>().isBombOnPlayer = true; // check if this will cause all players to have the bomb
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().isBombOnPlayer = true; // let unity randomly find a player to put bomb
                 PlayersWithBomb = 1;
                 
@@ -124,6 +130,11 @@ public class PlayerDetectorAndBombTransferScript : MonoBehaviour
 
         }
 
+    }
+
+    void ShowWinScreen()
+    {
+        //WinScreen.SetActive(true);
     }
 
 }
