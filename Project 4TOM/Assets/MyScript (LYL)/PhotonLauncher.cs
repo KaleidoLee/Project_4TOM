@@ -121,6 +121,8 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < roomList.Count; i++)
         {
+            if (roomList[i].RemovedFromList)
+                continue;
             Instantiate(RoomButtonPrefabs, RoomContainer).GetComponent<RoomListButtons>().setUp(roomList[i]);
         }
     }

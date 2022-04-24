@@ -8,7 +8,7 @@ using Photon.Pun;
 public class RoomListButtons : MonoBehaviour
 {
     [SerializeField] TMP_Text roomNameText;
-    RoomInfo info;
+    public RoomInfo info;
 
     public void setUp(RoomInfo roomInfo)
     {
