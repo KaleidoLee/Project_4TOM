@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
             Jump();
             CheckGround();
             SwitchAnimation();
-            BombChecker();
+            //BombChecker();
         }
         else
         {
