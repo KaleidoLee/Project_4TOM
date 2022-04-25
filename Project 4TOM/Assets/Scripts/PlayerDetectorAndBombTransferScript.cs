@@ -118,9 +118,7 @@ public class PlayerDetectorAndBombTransferScript : MonoBehaviour
                 PlayersWithBomb = 1;
                 
             }
-
         }
-
     }
 
     void ShowWinScreen()

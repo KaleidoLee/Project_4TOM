@@ -107,7 +107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2908261556997803711
 Transform:
   m_ObjectHideFlags: 0
@@ -341,11 +341,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PositionModel:
     SynchronizeEnabled: 1
-    TeleportEnabled: 0
-    TeleportIfDistanceGreaterThan: 1
-    InterpolateOption: 0
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 80
+    InterpolateLerpSpeed: 1
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
@@ -353,12 +353,12 @@ MonoBehaviour:
   m_RotationModel:
     SynchronizeEnabled: 1
     InterpolateOption: 2
-    InterpolateRotateTowardsSpeed: 10000
+    InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 500
   m_ScaleModel:
     SynchronizeEnabled: 1
     InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 100
+    InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 100
 --- !u!114 &7354037559881991162
 MonoBehaviour:

@@ -48,6 +48,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
         bombImage.SetActive(false);
         currentHealthPoints = baseHealthPoints;
         currentLives = baseLives;
+
+        if (!view.IsMine)
+        {
+            Destroy(rb);
+            //rb.gravityScale = 0;
+            //rb.angularDrag = 0;
+            //rb.mass = 0.1f;
+        }
     } 
 
     // Update is called once per frame
