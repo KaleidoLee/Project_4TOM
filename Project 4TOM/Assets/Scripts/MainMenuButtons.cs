@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class MainMenuButtons : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class MainMenuButtons : MonoBehaviour
     private float glowIntensity = 0.3f;
     [SerializeField] private float glowRate;
     private bool glowDown = true;
+
+    public AudioMixer audioMixer;
 
     private void Start()
     {
@@ -57,5 +60,15 @@ public class MainMenuButtons : MonoBehaviour
     {
         Debug.Log("Quit the game");
         Application.Quit();
+    }
+
+    public void BGMVolume(float value)
+    {
+        audioMixer.SetFloat("BGM", value);
+    }
+
+    public void SFXVolume(float value)
+    {
+        audioMixer.SetFloat("SFX", value);
     }
 }
